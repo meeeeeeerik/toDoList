@@ -1,8 +1,17 @@
-import { getTasks } from './api/task';
+import { getActiveTasks, getArchiveTasks } from './api/task';
 import { getUser } from './api/user';
-import { renderTaskLoader, renderTasks, renderUser } from './utils/renders';
+import {
+  renderActiveTaskLoader,
+  renderActiveTasks,
+  renderArchiveTaskLoader,
+  renderArchiveTasks,
+  renderUser,
+} from './utils/renders';
 import { openTaskModal } from './utils/taskModalHandlers';
-import { onTasksContainerClick } from './utils/tasksContainerHandlers';
+import {
+  onActiveTasksContainerClick,
+  onArchiveTasksContainerClick,
+} from './utils/tasksContainerHandlers';
 
 function removeUserLoader() {
   const loader = document.querySelector('#loader').remove();
@@ -10,6 +19,22 @@ function removeUserLoader() {
   if (loader) {
     loader.remove();
   }
+}
+
+async function getAndRenderActiveTasks() {
+  renderActiveTaskLoader();
+
+  const activeTasks = await getActiveTasks();
+
+  renderActiveTasks(activeTasks);
+}
+
+async function getAndRenderArchiveTasks() {
+  renderArchiveTaskLoader();
+
+  const archiveTasks = await getArchiveTasks();
+
+  renderArchiveTasks(archiveTasks);
 }
 
 async function start() {
@@ -24,18 +49,22 @@ async function start() {
 
     removeUserLoader();
 
-    renderTaskLoader();
+    await getAndRenderActiveTasks();
 
-    const tasks = await getTasks();
-
-    renderTasks(tasks);
+    await getAndRenderArchiveTasks();
 
     const addTaskButton = document.querySelector('#addTaskButton');
-    const tasksContainer = document.querySelector('#tasksContainer');
+    const activeTasksContainer = document.querySelector('#tasksContainer');
+    const archiveTasksContainer = document.querySelector(
+      '#archiveTasksContainer'
+    );
 
     addTaskButton.addEventListener('click', () => openTaskModal());
-
-    tasksContainer.addEventListener('click', onTasksContainerClick);
+    activeTasksContainer.addEventListener('click', onActiveTasksContainerClick);
+    archiveTasksContainer.addEventListener(
+      'click',
+      onArchiveTasksContainerClick
+    );
   } catch (error) {
     console.log('error', error);
   }
