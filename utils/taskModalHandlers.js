@@ -3,6 +3,7 @@ import { modes } from './constants';
 import { createTaskModalHtml } from './htmlTemplates';
 import { renderNewTask, renderUpdatedTask } from '../utils/renders';
 import { removeElementAfterAnimationPromise } from './utils';
+import { errorHandler } from './errorHandler';
 
 export function onTaskModalContainerClick(event) {
   if (event.target.id === 'task-modal-container') {
@@ -81,7 +82,7 @@ export function openTaskModal(mode = modes.create, taskId) {
         renderUpdatedTask(updatedTask);
       }
     } catch (error) {
-      console.log('error', error);
+      errorHandler(error);
 
       title.removeAttribute('disabled');
       description.removeAttribute('disabled');

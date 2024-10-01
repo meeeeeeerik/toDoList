@@ -1,5 +1,6 @@
 import { getActiveTasks, getArchiveTasks } from './api/task';
 import { getUser } from './api/user';
+import { errorHandler } from './utils/errorHandler';
 import { onLogoutButtonClick } from './utils/logoutHandler';
 import {
   renderActiveTaskLoader,
@@ -23,19 +24,27 @@ function removeUserLoader() {
 }
 
 async function getAndRenderActiveTasks() {
-  renderActiveTaskLoader();
+  try {
+    renderActiveTaskLoader();
 
-  const activeTasks = await getActiveTasks();
+    const activeTasks = await getActiveTasks();
 
-  renderActiveTasks(activeTasks);
+    renderActiveTasks(activeTasks);
+  } catch (error) {
+    errorHandler(error);
+  }
 }
 
 async function getAndRenderArchiveTasks() {
-  renderArchiveTaskLoader();
+  try {
+    renderArchiveTaskLoader();
 
-  const archiveTasks = await getArchiveTasks();
+    const archiveTasks = await getArchiveTasks();
 
-  renderArchiveTasks(archiveTasks);
+    renderArchiveTasks(archiveTasks);
+  } catch (error) {
+    errorHandler(error);
+  }
 }
 
 async function start() {
@@ -69,7 +78,7 @@ async function start() {
       onArchiveTasksContainerClick
     );
   } catch (error) {
-    console.log('error', error);
+    errorHandler(error);
   }
 }
 

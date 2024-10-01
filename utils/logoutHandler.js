@@ -1,6 +1,7 @@
-import { logout } from "../api/user";
-import { createModalHtml } from "./htmlTemplates";
-import { removeElementAfterAnimationPromise } from "./utils";
+import { logout } from '../api/user';
+import { errorHandler } from './errorHandler';
+import { createModalHtml } from './htmlTemplates';
+import { removeElementAfterAnimationPromise } from './utils';
 
 export function onLogoutButtonClick() {
   const modalHtml = createModalHtml({
@@ -11,9 +12,7 @@ export function onLogoutButtonClick() {
   document.body.insertAdjacentHTML('beforeend', modalHtml);
 
   const modalContainer = document.querySelector('[data-modal-container]');
-  const closeModalButton = document.querySelector(
-    '[data-close-modal-button]'
-  );
+  const closeModalButton = document.querySelector('[data-close-modal-button]');
   const submitModalButton = document.querySelector(
     '[data-submit-modal-button]'
   );
@@ -24,10 +23,7 @@ export function onLogoutButtonClick() {
     return removeElementAfterAnimationPromise(modalContainer, () => {
       modalContainer.removeEventListener('click', onModalContainerClick);
       closeModalButton.removeEventListener('click', closeModal);
-      submitModalButton.removeEventListener(
-        'click',
-        onSubmitModalButtonClick
-      );
+      submitModalButton.removeEventListener('click', onSubmitModalButtonClick);
     });
   };
 
@@ -45,7 +41,7 @@ export function onLogoutButtonClick() {
 
       window.location.href = '../auth/login.html';
     } catch (error) {
-      console.log('error', error);
+      errorHandler(error);
     }
   };
 
