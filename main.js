@@ -59,7 +59,7 @@ async function start() {
     const user = await getUser();
 
     if (!user) {
-      window.location.href = '/auth/login.html';
+      window.location.href = '/auth/registration.html';
     }
 
     renderUser(user);

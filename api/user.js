@@ -1,32 +1,12 @@
 import { supabase } from './config';
 
-export async function register(email, password) {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
+export async function registerWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
     options: {
-      emailRedirectTo: 'https://merik-to-do-list.netlify.app/auth/login.html',
+      emailRedirectTo: 'https://merik-to-do-list.netlify.app/auth/registration.html',
     },
   });
-
-  if (error) {
-    throw Error(error?.message || 'Что-то случилось при регистрации');
-  }
-
-  return data.user;
-}
-
-export async function login(email, password) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
-
-  if (error) {
-    throw Error(error?.message || 'Что-то случилось при входе');
-  }
-
-  return data.user;
 }
 
 export async function logout() {

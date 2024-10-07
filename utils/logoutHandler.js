@@ -39,7 +39,7 @@ export function onLogoutButtonClick() {
 
       await closeModal();
 
-      window.location.href = '../auth/login.html';
+      window.location.href = '../auth/registration.html';
     } catch (error) {
       errorHandler(error);
     }
