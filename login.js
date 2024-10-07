@@ -1,5 +1,5 @@
-import { registerWithGoogle } from '../api/user';
-import { errorHandler } from '../utils/errorHandler';
+import { registerWithGoogle } from './api/user';
+import { errorHandler } from './utils/errorHandler';
 
 async function onSubmit(event) {
   event.preventDefault();
@@ -12,9 +12,9 @@ async function onSubmit(event) {
 
 async function start() {
   try {
-    const registerButton = document.querySelector('#registerButton');
+    const loginButton = document.querySelector('#loginButton');
 
-    registerButton.addEventListener('click', onSubmit);
+    loginButton.addEventListener('click', onSubmit);
   } catch (error) {
     errorHandler(error);
   }
