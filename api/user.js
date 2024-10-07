@@ -4,7 +4,7 @@ export async function registerWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      emailRedirectTo: 'https://merik-to-do-list.netlify.app/auth/registration.html',
+      emailRedirectTo: 'https://meriks-to-do-list.netlify.app/auth/registration.html',
     },
   });
 }
